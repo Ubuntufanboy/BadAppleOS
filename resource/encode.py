@@ -29,11 +29,6 @@ def build(freq):
 
 # Rest of the code remains unchanged
 
-With this modification, the custom comparison method (__lt__) allows Python to compare instances of hnode based on their frequencies during the heap operations. This should resolve the TypeError, and the code should work as expected now.
-
-Please try running the code again with these changes, and it should work without any comparison errors. If you encounter any other issues or have further questions, feel free to let me know.
-
-
 def walk(node, prefix="", code={}):
   f, n = node
   if (isinstance(n, hnode)):
