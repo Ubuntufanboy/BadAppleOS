@@ -9,20 +9,30 @@ class hnode(object):
     self.frequency = frequency
     self.left = left
     self.right = right
-
+    
+    # Custom comparison method for heap operations
+    def __lt__(self, other):
+      return self.frequency < other.frequency
 
 def build(freq):
   queue = []
   for i in range(0, 256):
     if (freq[i] != 0):
-      heappush(queue, (freq[i], hnode(freq[i], None, None)))  # Wrap frequency and hnode in a tuple
+      heappush(queue, (freq[i], hnode(freq[i], None, None)))
   while (len(queue) > 1):
     a = heappop(queue)
     b = heappop(queue)
     freq_sum = a[0] + b[0]
-    node = hnode(freq_sum, a[1], b[1])  # Use the hnode instances directly
-    heappush(queue, (freq_sum, node))  # Wrap frequency and hnode in a tuple
+    node = hnode(freq_sum, a[1], b[1])
+    heappush(queue, (freq_sum, node))
   return queue[0]
+
+# Rest of the code remains unchanged
+
+With this modification, the custom comparison method (__lt__) allows Python to compare instances of hnode based on their frequencies during the heap operations. This should resolve the TypeError, and the code should work as expected now.
+
+Please try running the code again with these changes, and it should work without any comparison errors. If you encounter any other issues or have further questions, feel free to let me know.
+
 
 def walk(node, prefix="", code={}):
   f, n = node
