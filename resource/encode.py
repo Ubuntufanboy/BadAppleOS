@@ -5,21 +5,23 @@ import os, sys
 from heapq import *
 
 class hnode(object):
-  def __init__(self, left=None, right=None):
+  def __init__(self, frequency, left=None, right=None):
+    self.frequency = frequency
     self.left = left
     self.right = right
+
 
 def build(freq):
   queue = []
   for i in range(0, 256):
     if (freq[i] != 0):
-      heappush(queue, ((freq[i], i, hnode())))  # Wrap the frequency, character code, and hnode in a tuple
+      heappush(queue, (freq[i], hnode(freq[i], None, None)))  # Wrap frequency and hnode in a tuple
   while (len(queue) > 1):
     a = heappop(queue)
     b = heappop(queue)
     freq_sum = a[0] + b[0]
-    node = hnode(a, b)
-    heappush(queue, (freq_sum, None, node))  # Wrap the frequency, None (to represent character code), and node in a tuple
+    node = hnode(freq_sum, a[1], b[1])  # Use the hnode instances directly
+    heappush(queue, (freq_sum, node))  # Wrap frequency and hnode in a tuple
   return queue[0]
 
 def walk(node, prefix="", code={}):
