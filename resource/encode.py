@@ -18,7 +18,7 @@ def build(freq):
     a = heappop(queue)
     b = heappop(queue)
     node = hnode(a, b)
-    heappush(queue, (a[0] + b[0], int(node)))
+    heappush(queue, (a[0] + b[0], node))
   return queue[0]
 
 def walk(node, prefix="", code={}):
@@ -61,7 +61,7 @@ def compress(content):
       (elen >> 8) & 0xff, elen & 0xff,
       len(code)
   ]
-  for key, value in code.iteritems():
+  for key, value in code.items():
     code_bytes.append(key)
     tmp = encode(value, '1')
     code_bytes.append(len(value))
