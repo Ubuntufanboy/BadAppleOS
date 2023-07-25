@@ -11,12 +11,12 @@ class hnode(object):
 
 def build(freq):
   queue = []
-    for i in range(0, 256):
-      if (freq[i] != 0):
-        heappush(queue, ((freq[i], i)))  # Wrap the elements in a tuple
-    while (len(queue) > 1):
-      a = heappop(queue)
-      b = heappop(queue)
+  for i in range(0, 256):
+    if (freq[i] != 0):
+      heappush(queue, ((freq[i], i)))  # Wrap the elements in a tuple
+  while (len(queue) > 1):
+    a = heappop(queue)
+    b = heappop(queue)
     node = hnode(a, b)
     heappush(queue, ((a[0] + b[0], node)))  # Wrap the sum and node in a tuple
   return queue[0]
