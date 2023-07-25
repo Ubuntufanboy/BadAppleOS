@@ -13,12 +13,13 @@ def build(freq):
   queue = []
   for i in range(0, 256):
     if (freq[i] != 0):
-      heappush(queue, ((freq[i], i)))  # Wrap the elements in a tuple
+      heappush(queue, ((freq[i], i, hnode())))  # Wrap the frequency, character code, and hnode in a tuple
   while (len(queue) > 1):
     a = heappop(queue)
     b = heappop(queue)
+    freq_sum = a[0] + b[0]
     node = hnode(a, b)
-    heappush(queue, ((a[0] + b[0], node)))  # Wrap the sum and node in a tuple
+    heappush(queue, (freq_sum, None, node))  # Wrap the frequency, None (to represent character code), and node in a tuple
   return queue[0]
 
 def walk(node, prefix="", code={}):
