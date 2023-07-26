@@ -43,36 +43,42 @@ def huffman(lst):
   return walk(build(freq))
 
 def encode(s, ch):
-  while (len(s) % 8 != 0):
-    s += ch
-  lst = []
-  for i in range(0, len(s) // 8):
-    n = 0
-    for j in range(0, 8):
-      k = i * 8 + j
-      n |= (1 if (s[k] == ch) else 0) << j
-    lst.append(n)
-  return lst
+    while len(s) % 8 != 0:
+        s += ch
+    lst = []
+    for i in range(0, len(s) // 8):
+        n = 0
+        for j in range(0, 8):
+            k = i * 8 + j
+            n |= (1 if (s[k] == ch) else 0) << j
+        lst.append(n)
+    return lst, len(s) // 8  # Return the encoded list and the number of characters
 
 def compress(content):
-  fcount = len(content) / 80 / 25  # frame_count
-  edata = encode(content, '*')
-  elen = len(edata)
-  code = huffman(edata)
-  hdata = ""
-  for item in edata:
-    hdata += code[item]
-  code_bytes = [  # reverse the endian
-      fcount >> 8, fcount & 0xff, elen >> 24, (elen >> 16) & 0xff,
-      (elen >> 8) & 0xff, elen & 0xff,
-      len(code)
-  ]
-  for key, value in code.items():
-    code_bytes.append(key)
-    tmp = encode(value, '1')
-    code_bytes.append(len(value))
-    code_bytes += tmp
-  return code_bytes + encode(hdata, '1')
+    fcount = len(content) / 80 / 25  # frame_count
+    edata, elen = encode(content, '*')
+    code = huffman(edata)
+    hdata = ""
+    for item in edata:
+        hdata += code[item]
+
+    code_bytes = [
+        fcount >> 8, fcount & 0xff, elen >> 24, (elen >> 16) & 0xff,
+        (elen >> 8) & 0xff, elen & 0xff,
+        len(code)
+    ]
+
+    for i in range(256):  # Add all possible characters to code_bytes, even if they have zero frequency
+        if i in code:
+            code_bytes.append(i)
+            tmp = encode(code[i], '1')
+            code_bytes.append(len(code[i]))
+            code_bytes += tmp
+        else:
+            code_bytes.append(i)
+            code_bytes.append(0)
+
+    return code_bytes + encode(hdata, '1')[0]
 
 if __name__ == "__main__":
   txt, bin = sys.argv[1], sys.argv[2]
