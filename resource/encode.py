@@ -15,17 +15,19 @@ class hnode(object):
       return self.frequency < other.frequency
 
 def build(freq):
-  queue = []
-  for i in range(0, 256):
-    if (freq[i] != 0):
-      heappush(queue, (freq[i], hnode(freq[i], None, None)))
-  while (len(queue) > 1):
-    a = heappop(queue)
-    b = heappop(queue)
-    freq_sum = a[0] + b[0]
-    node = hnode(freq_sum, a[1], b[1])
-    heappush(queue, (freq_sum, node))
-  return queue[0]
+    queue = []
+    for i in range(0, 256):
+        if freq[i] != 0:
+            heappush(queue, (freq[i], hnode(left=None, right=None)))
+
+    while len(queue) > 1:
+        a = heappop(queue)
+        b = heappop(queue)
+        freq_sum = a[0] + b[0]
+        node = hnode(frequency=freq_sum, left=a[1], right=b[1])
+        heappush(queue, (freq_sum, node))
+
+    return queue[0][1]
 
 # Rest of the code remains unchanged
 
