@@ -29,13 +29,12 @@ def build(freq):
 # Rest of the code remains unchanged
 
 def walk(node, prefix="", code={}):
-  f, n = node
-  if (isinstance(n, hnode)):
-    walk(n.left, prefix + "0", code)
-    walk(n.right, prefix + "1", code)
-  else:
-    code[n] = prefix
-  return code
+    if isinstance(node, hnode):  # Check if the node is an instance of hnode
+        walk(node.left, prefix + "0", code)
+        walk(node.right, prefix + "1", code)
+    else:
+        code[node] = prefix  # Use node directly as the key in the code dictionary
+    return code
 
 def huffman(lst):
   freq = [0] * 256
