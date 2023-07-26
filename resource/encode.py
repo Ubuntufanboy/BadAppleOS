@@ -71,10 +71,13 @@ def compress(content):
     while len(hdata) % 8 != 0:
         hdata += '0'
 
+    # Calculate the actual length of hdata after padding
+    actual_hdata_length = len(hdata) // 8
+
     code_bytes = [
         fcount >> 8, fcount & 0xff, elen >> 24, (elen >> 16) & 0xff,
         (elen >> 8) & 0xff, elen & 0xff,
-        len(code)
+        actual_hdata_length  # Use the actual length of hdata in code_bytes
     ]
 
     for i in range(256):  # Add all possible characters to code_bytes, even if they have zero frequency
@@ -89,6 +92,8 @@ def compress(content):
             code_bytes.append(0)  # Add zero length for characters with zero frequency
 
     return code_bytes + encode(hdata, '1')[0]
+
+# Rest of the code remains unchanged
 
 if __name__ == "__main__":
   txt, bin = sys.argv[1], sys.argv[2]
