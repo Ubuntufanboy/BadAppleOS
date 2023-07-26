@@ -45,6 +45,18 @@ def huffman(lst):
 
     return code
 
+def encode(s, ch):
+    while len(s) % 8 != 0:
+        s += ch
+    lst = []
+    for i in range(0, len(s) // 8):
+        n = 0
+        for j in range(0, 8):
+            k = i * 8 + j
+            n |= (1 if (s[k] == ch) else 0) << j
+        lst.append(n)
+    return lst, len(s) // 8  # Return the encoded list and the number of characters
+
 def compress(content):
     fcount = len(content) / 80 / 25  # frame_count
     edata, elen = encode(content, '*')
