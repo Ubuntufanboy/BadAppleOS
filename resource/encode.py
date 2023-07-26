@@ -41,10 +41,11 @@ def huffman(lst):
         freq[n] += 1
 
     htree = build(freq)
-    code = walk(htree)
+    code = {i: '' for i in range(256)}  # Initialize code dictionary with default empty strings
+
+    walk(htree, code=code)  # Update the code dictionary
 
     return code
-
 def encode(s, ch):
     while len(s) % 8 != 0:
         s += ch
