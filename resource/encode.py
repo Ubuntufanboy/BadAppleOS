@@ -91,7 +91,10 @@ def compress(content):
             code_bytes.append(0)
             code_bytes.append(0)  # Add zero length for characters with zero frequency
 
-    return code_bytes + encode(hdata, '1')[0]
+    return code_bytes + encode(hdata, '1')  # Remove the [0] to use the list of integers directly
+
+# Rest of the code remains unchanged
+
 
 # Rest of the code remains unchanged
 
