@@ -85,13 +85,16 @@ def compress(content):
             code_bytes.append(i)
             tmp = encode(code[i], '1')
             code_bytes.append(len(code[i]))
-            code_bytes += tmp
+            code_bytes += tmp[0]  # Unpack the encoded list from the tuple and add it to code_bytes
         else:
             code_bytes.append(i)
             code_bytes.append(0)
             code_bytes.append(0)  # Add zero length for characters with zero frequency
 
-    return code_bytes + encode(hdata, '1')  # Remove the [0] to use the list of integers directly
+    return code_bytes + encode(hdata, '1')[0]  # Unpack the encoded list from the tuple
+
+# Rest of the code remains unchanged
+
 
 # Rest of the code remains unchanged
 
