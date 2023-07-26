@@ -66,6 +66,10 @@ def compress(content):
     for item in edata:
         hdata += code[item]
 
+    # Pad hdata to make its length a multiple of 8
+    while len(hdata) % 8 != 0:
+        hdata += '0'
+
     code_bytes = [
         fcount >> 8, fcount & 0xff, elen >> 24, (elen >> 16) & 0xff,
         (elen >> 8) & 0xff, elen & 0xff,
