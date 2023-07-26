@@ -18,7 +18,7 @@ def build(freq):
     queue = []
     for i in range(0, 256):
         if (freq[i] != 0):
-            heappush(queue, (freq[i], hnode(frequency=freq[i])))  # Provide the frequency to hnode
+            heappush(queue, (freq[i], hnode(frequency=freq[i], left=None, right=None)))  # Provide the frequency to hnode
     while (len(queue) > 1):
         a = heappop(queue)
         b = heappop(queue)
@@ -26,7 +26,6 @@ def build(freq):
         node = hnode(frequency=freq_sum, left=a[1], right=b[1])  # Provide the frequency to hnode
         heappush(queue, (freq_sum, node))
     return queue[0][1]  # Return the root of the Huffman tree
-# Rest of the code remains unchanged
 
 def walk(node, prefix="", code={}):
     if isinstance(node, hnode):  # Check if the node is an instance of hnode
@@ -37,22 +36,14 @@ def walk(node, prefix="", code={}):
     return code
 
 def huffman(lst):
-  freq = [0] * 256
-  for n in lst:
-    freq[n] += 1
-  return walk(build(freq))
+    freq = [0] * 256
+    for n in lst:
+        freq[n] += 1
 
-def encode(s, ch):
-    while len(s) % 8 != 0:
-        s += ch
-    lst = []
-    for i in range(0, len(s) // 8):
-        n = 0
-        for j in range(0, 8):
-            k = i * 8 + j
-            n |= (1 if (s[k] == ch) else 0) << j
-        lst.append(n)
-    return lst, len(s) // 8  # Return the encoded list and the number of characters
+    htree = build(freq)
+    code = walk(htree)
+
+    return code
 
 def compress(content):
     fcount = len(content) / 80 / 25  # frame_count
