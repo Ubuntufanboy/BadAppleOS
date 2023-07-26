@@ -59,7 +59,7 @@ def encode(s, ch):
     return lst, len(s) // 8  # Return the encoded list and the number of characters
 
 def compress(content):
-    fcount = len(content) / 80 / 25  # frame_count
+    fcount = int(len(content) / 80 / 25)  # Convert fcount to an integer
     edata, elen = encode(content, '*')
     code = huffman(edata)
     hdata = ""
