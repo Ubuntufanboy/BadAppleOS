@@ -5,30 +5,27 @@ import os, sys
 from heapq import *
 
 class hnode(object):
-  def __init__(self, frequency, left=None, right=None):
-    self.frequency = frequency
-    self.left = left
-    self.right = right
-    
+    def __init__(self, frequency, left=None, right=None):
+        self.frequency = frequency
+        self.left = left
+        self.right = right
+
     # Custom comparison method for heap operations
     def __lt__(self, other):
-      return self.frequency < other.frequency
+        return self.frequency < other.frequency
 
 def build(freq):
     queue = []
     for i in range(0, 256):
-        if freq[i] != 0:
-            heappush(queue, (freq[i], hnode(left=None, right=None)))
-
-    while len(queue) > 1:
+        if (freq[i] != 0):
+            heappush(queue, (freq[i], hnode(frequency=freq[i])))  # Provide the frequency to hnode
+    while (len(queue) > 1):
         a = heappop(queue)
         b = heappop(queue)
         freq_sum = a[0] + b[0]
-        node = hnode(frequency=freq_sum, left=a[1], right=b[1])
+        node = hnode(frequency=freq_sum, left=a[1], right=b[1])  # Provide the frequency to hnode
         heappush(queue, (freq_sum, node))
-
-    return queue[0][1]
-
+    return queue[0][1]  # Return the root of the Huffman tree
 # Rest of the code remains unchanged
 
 def walk(node, prefix="", code={}):
