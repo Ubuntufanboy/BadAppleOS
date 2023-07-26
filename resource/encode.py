@@ -77,9 +77,10 @@ def compress(content):
         else:
             code_bytes.append(i)
             code_bytes.append(0)
+            code_bytes.append(0)  # Add zero length for characters with zero frequency
 
     return code_bytes + encode(hdata, '1')[0]
-    
+
 if __name__ == "__main__":
   txt, bin = sys.argv[1], sys.argv[2]
   data = []
