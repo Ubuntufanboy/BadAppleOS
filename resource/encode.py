@@ -79,7 +79,7 @@ def compress(content):
             code_bytes.append(0)
 
     return code_bytes + encode(hdata, '1')[0]
-
+    
 if __name__ == "__main__":
   txt, bin = sys.argv[1], sys.argv[2]
   data = []
