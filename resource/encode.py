@@ -54,9 +54,10 @@ def encode(s, ch):
         n = 0
         for j in range(0, 8):
             k = i * 8 + j
-            n |= (1 if (s[k] == ch) else 0) << j
+            n |= (1 if (s[k] == ch) else 0) << (7 - j)  # Correctly calculate the value based on bit position
         lst.append(n)
     return lst, len(s) // 8  # Return the encoded list and the number of characters
+
 
 def compress(content):
     fcount = int(len(content) / 80 / 25)  # Convert fcount to an integer
