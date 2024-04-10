@@ -39,7 +39,7 @@ tmppgdir.o: tmppgdir.c
 	$(CC) -m32 -c -o tmppgdir.o $(CFLAGS) tmppgdir.c
 
 vdata.bin:
-	python ../resource/encode.py ../resource/video.txt vdata.bin
+	python3 ../resource/encode.py ../resource/video.txt vdata.bin
 
 vdata.o: vdata.bin
 	objcopy -B i386 -I binary -O elf32-i386 vdata.bin vdata.o
