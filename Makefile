@@ -8,7 +8,7 @@ docker:
 	docker build -t=grub:latest docker
 
 img: boot kernel
-	python link.py build/boot.bin build/kernel.bin $(OSIMG)
+	python3 link.py build/boot.bin build/kernel.bin $(OSIMG)
 
 grub_iso: kernel
 	mkdir -p build/iso/boot/grub
